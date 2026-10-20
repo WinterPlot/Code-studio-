@@ -35,6 +35,14 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      - name: Fetch logback-android
+        run: |
+          d=composite-builds/external/logback-android
+          if [ ! -d "$d/logback-core/src/main/java/ch/qos/logback/core" ]; then
+            rm -rf "$d"
+            git clone --depth 1 https://github.com/AndroidIDEOfficial/logback-android "$d"
+          fi
+          ls "$d" | head
       - name: Assemble debug APK
         run: |
           ./gradlew :core:app:assembleDebug --console=plain > build.log 2>&1 || {
