@@ -36,9 +36,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Assemble debug APK
-        run: ./gradlew :core:app:assembleDebug --stacktrace
+        run: ./gradlew :core:app:assembleDebug --console=plain > build.log 2>&1
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
           name: debug-apks
           path: core/app/build/outputs/apk/debug/*.apk
+      - name: Show errors
+        if: failure()
+        run: |
+          grep -n -E "^e: |error:|What went wrong" -A 6 build.log | head -80
