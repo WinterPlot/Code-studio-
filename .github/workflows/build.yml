@@ -55,3 +55,9 @@ jobs:
           grep -n -E "^e: |error:" build.log | cut -c1-300 | head -30
           echo "== LAST 40 LINES =="
           tail -n 40 build.log | cut -c1-300
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
