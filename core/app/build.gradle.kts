@@ -46,7 +46,7 @@ android {
   namespace = BuildConfig.packageName
 
   defaultConfig {
-    applicationId = "com.userlabs.codestudio"
+    applicationId = "com.itsaky.androidide"
     vectorDrawables.useSupportLibrary = true
   }
 
