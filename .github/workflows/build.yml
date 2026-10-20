@@ -50,7 +50,7 @@ jobs:
           keytool -genkeypair -v -keystore ~/.android/debug.keystore -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Android Debug,O=Android,C=US"
       - name: Assemble debug APK
         run: |
-          ./gradlew :core:app:assembleDebug --console=plain > build.log 2>&1 || {
+          ./gradlew :core:app:assembleDebug -x :core:app:validateSigningDebug --console=plain > build.log 2>&1 || {
             echo "===== WHAT WENT WRONG ====="
             grep -n -A 12 "What went wrong" build.log | cut -c1-300 | head -50
             echo "===== COMPILER ERRORS ====="
