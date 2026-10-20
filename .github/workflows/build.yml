@@ -46,3 +46,12 @@ jobs:
         if: failure()
         run: |
           grep -n -E "^e: |error:|What went wrong" -A 6 build.log | head -80
+      - name: Show errors
+        if: failure()
+        run: |
+          echo "== WHAT WENT WRONG =="
+          grep -n -A 12 "What went wrong" build.log | cut -c1-300 | head -60
+          echo "== KOTLIN/JAVA ERRORS =="
+          grep -n -E "^e: |error:" build.log | cut -c1-300 | head -30
+          echo "== LAST 40 LINES =="
+          tail -n 40 build.log | cut -c1-300
