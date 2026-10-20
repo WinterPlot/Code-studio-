@@ -43,6 +43,11 @@ jobs:
             git clone --depth 1 https://github.com/AndroidIDEOfficial/logback-android "$d"
           fi
           ls "$d" | head
+      - name: Create fresh debug keystore
+        run: |
+          mkdir -p ~/.android
+          rm -f ~/.android/debug.keystore
+          keytool -genkeypair -v -keystore ~/.android/debug.keystore -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Android Debug,O=Android,C=US"
       - name: Assemble debug APK
         run: |
           ./gradlew :core:app:assembleDebug --console=plain > build.log 2>&1 || {
